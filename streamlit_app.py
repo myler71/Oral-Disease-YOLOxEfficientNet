@@ -7,6 +7,19 @@ import tensorflow as tf
 from fastapi import HTTPException
 from ultralytics import YOLO
 
+# Fallback for CPU environments where torchvision::nms C++ operator is unavailable
+try:
+    import torch
+    import torchvision.ops
+    torchvision.ops.nms(torch.zeros((1, 4)), torch.ones((1,)), 0.5)
+except Exception:
+    try:
+        from ultralytics.utils.nms import TorchNMS
+        import torchvision.ops
+        torchvision.ops.nms = TorchNMS.nms
+    except Exception:
+        pass
+
 from main import (
     EFFICIENTNET_MODEL_PATH,
     YOLO_MODEL_PATH,
