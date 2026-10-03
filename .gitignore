@@ -36,6 +36,7 @@ data/
 *.json
 *.txt
 !class_names.json
+!requirements.txt
 
 # Environment
 .env

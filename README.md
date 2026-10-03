@@ -25,6 +25,14 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 Open `http://localhost:8000` in a browser → upload an oral photo → get combined results.
 
+### Streamlit UI
+
+```bash
+streamlit run streamlit_app.py
+```
+
+Open `http://localhost:8501`. The UI loads both models in-process (no API server needed) and shows the YOLOv8n boxes, the EfficientNet top-3, and the `/predict/all` JSON. To deploy it on AWS free tier, see [`docs/DEPLOY_AWS.md`](docs/DEPLOY_AWS.md).
+
 ---
 
 ## Project Structure
@@ -32,6 +40,8 @@ Open `http://localhost:8000` in a browser → upload an oral photo → get combi
 ```
 Oral-Disease-YOLOxEfficientNet/
 ├── main.py                    # FastAPI app (entry point)
+├── streamlit_app.py           # Streamlit UI (reuses main.py inference helpers)
+├── .streamlit/config.toml     # Streamlit server config
 ├── requirements.txt
 ├── .gitignore
 ├── models/
@@ -40,6 +50,7 @@ Oral-Disease-YOLOxEfficientNet/
 ├── notebooks/
 │   └── final_yolo.ipynb           # Training & experimentation notebook
 └── docs/
+    ├── DEPLOY_AWS.md              # AWS free-tier deployment guide
     └── Efficientnet presentation.pdf
 ```
 
